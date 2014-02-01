@@ -6,8 +6,8 @@ install:
 script: make test
 deploy:
   provider: heroku
-  api_key:
-    secure: PIjg32zDfftijkfFse/A/2TtlWsC2f/vhm9O2pVgr3nV8o/8jFPw+6ii0XEcufwkXNyGa24JRvHaXp2RpUW4MDVLr26F1A2a39GE762gl2n0n+tlgMhaaho+CVDwKGx8ethofb/qSqxWz2V3ajjSJhIfzj2ZHk55lOgzpUnjze0=
-  app: flask-restful-todo 
+  app: flask-restful-todo
   on:
     repo: erkarl/flask-restful-todo
+  api_key:
+    secure: wwMAVR6WiWLxFzELxSqRzp04MqaaR8CdBPuY+ZkPpp+U8UGC2/Meld5jIpOId1DElufIObAY9aHdZ22wfsGErgGln55WIGJQt+0EEyxjf+OBM0819n5PX6B5LkXqdxPHoT4CHJ26j5FOrpmsZ7MMGTJdPrjN1kbZkbUKJcV4uLs=
