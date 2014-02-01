@@ -9,4 +9,4 @@ test-python:
 	@echo "Running Flask-Restful-TODO tests"
 
 server:
-	python app.py 
+	python apps/app.py 
