@@ -7,7 +7,7 @@ api = restful.Api(app)
 
 class APIRoot(restful.Resource):
     def get(self):
-        return {'message': 'Welcome to TictailHack 2.0 API root.'}
+        return {'message': 'Welcome to API root.'}
 
 api.add_resource(APIRoot, '/')
 
