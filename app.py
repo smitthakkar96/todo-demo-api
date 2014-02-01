@@ -1,24 +1,21 @@
-# all the imports
-import sqlite3
+import os
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+from settings import Settings, ProductionSettings
+from apps.todo.models import db
 
-# configuration
-DATABASE = '/tmp/flaskr.db'
-DEBUG = True
-SECRET_KEY = 'development key'
-USERNAME = 'admin'
-PASSWORD = 'default'
-
-# create our little application :)
 app = Flask(__name__)
-app.config.from_object(__name__)
+db.init_app(app)
+
+# Settings based on environment
+if os.environ.get('FLASK_TODO_PRODUCTION'):
+    app.config.from_object(ProductionSettings)
+else:
+    app.config.from_object(Settings)
 
 
-def connect_db():
-    return sqlite3.connect(app.config['DATABASE'])
+def create_db():
+    with app.app_context():
+        db.create_all()
 
-
-if __name__ == '__main__':
-    # app.run()
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run()
