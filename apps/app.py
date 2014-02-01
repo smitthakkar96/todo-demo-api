@@ -10,11 +10,11 @@ from todo.resources import TodoResource
 app = Flask(__name__)
 db.init_app(app)
 
-# manager = flask.ext.restless.APIManager(app, flask_sqlalchemy_db=db)
-# manager.create_api(Todo, methods=['GET', 'PUT', 'POST', 'DELETE'], collection_name='todos')
-
 todoApi = restful.Api(app)
-todoApi.add_resource(TodoResource, '/api/todos')
+todoApi.add_resource(TodoResource,
+                     '/api/todos', '/api/todos/<int:todo_id>',
+                     endpoint='todos'
+                     )
 
 # Settings based on environment
 if os.environ.get('FLASK_TODO_PRODUCTION'):
@@ -25,6 +25,7 @@ else:
 
 @app.after_request
 def after_request(response):
+    # Enable CORS
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Headers'] = \
         'Accept, Content-Type, Origin, X-Requested-With'
