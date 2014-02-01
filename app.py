@@ -1,15 +1,24 @@
+# all the imports
+import sqlite3
 from flask import Flask
-from flask.ext import restful
+from flask.ext.sqlalchemy import SQLAlchemy
 
+# configuration
+DATABASE = '/tmp/flaskr.db'
+DEBUG = True
+SECRET_KEY = 'development key'
+USERNAME = 'admin'
+PASSWORD = 'default'
+
+# create our little application :)
 app = Flask(__name__)
-api = restful.Api(app)
+app.config.from_object(__name__)
 
 
-class APIRoot(restful.Resource):
-    def get(self):
-        return {'message': 'Welcome to API root.'}
+def connect_db():
+    return sqlite3.connect(app.config['DATABASE'])
 
-api.add_resource(APIRoot, '/')
 
 if __name__ == '__main__':
+    # app.run()
     app.run(debug=True)
