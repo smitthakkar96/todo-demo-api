@@ -1,10 +1,14 @@
 import os
 from flask import Flask
+from flask.ext import restful
 from settings import Settings, ProductionSettings
-from apps.todo.models import db
+from todo.models import db
+from todo.resources import TodoResource
 
 app = Flask(__name__)
 db.init_app(app)
+todoApi = restful.Api(app)
+todoApi.add_resource(TodoResource, '/')
 
 # Settings based on environment
 if os.environ.get('FLASK_TODO_PRODUCTION'):
