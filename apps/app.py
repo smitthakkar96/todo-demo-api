@@ -1,6 +1,5 @@
 import os
-from flask import Flask
-# import flask.ext.restless
+from flask import Flask, g
 from flask.ext import restful
 from settings import Settings, ProductionSettings
 from todo.models import db
@@ -32,6 +31,13 @@ def after_request(response):
     return response
 
 
+@app.before_request
+def before_request():
+    # Store our db connection in the application global
+    g.db = db
+
+
+# Create initial tables
 def create_db():
     with app.app_context():
         db.create_all()
