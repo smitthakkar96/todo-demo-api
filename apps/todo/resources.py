@@ -45,9 +45,8 @@ class TodoResource(restful.Resource):
         todo = Todo(todo_data['task'], todo_data['is_done'])
         g.db.session.add(todo)
         g.db.session.commit()
-
         return {
-            'todo': todo_data
+            'todo': marshal(todo, self.get_resource_fields())
         }, 201
 
     def delete(self, todo_id=None):
