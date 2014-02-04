@@ -8,5 +8,8 @@ lint:
 test-python:
 	@echo "Running Flask-Restful-TODO tests"
 
+initdb: 
+	python apps/create_db.py
+
 server:
 	python apps/app.py 
