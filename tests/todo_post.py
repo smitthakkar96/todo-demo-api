@@ -9,14 +9,16 @@ class TodoPostTestCase(TodoBaseTestCase):
         Ensure that a valid POST request to /api/todos
         will create a new Todo record.
         """
-        post_data = json.dumps({
+        post_data = {
             "todo": {
                 "task": "Morning yoga practice",
-                "is_done": "false"
+                "is_done": False
             }
-        })
+        }
 
-        # response = self.app.post('/api/todos', data=post_data)
-        # import pdb; pdb.set_trace()
-        # response = self.app.post('/api/todos', data=post_data)
-        # assert(response.status_code == 201)
+        headers = {'Content-Type': 'application/json'}
+
+        response = self.app.post('/api/todos', data=json.dumps(post_data), headers=headers)
+        assert(response.status_code == 201)
+        assert(post_data["todo"]["task"] in response.data)
+        assert(str(post_data["todo"]["is_done"]).lower() in response.data)
