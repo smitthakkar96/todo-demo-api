@@ -9,8 +9,8 @@ test-python:
 	@echo "Running Flask-Restful-TODO tests"
 	python manage.py test
 
-initdb: 
-	python apps/create_db.py
+db: 
+	python manage.py createdb
 
 server:
-	python apps/app.py 
+	python manage.py runserver
