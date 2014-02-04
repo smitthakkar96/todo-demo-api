@@ -4,10 +4,14 @@ from flask.ext import restful
 from settings import Settings, ProductionSettings
 from todo.models import db
 from todo.resources import TodoResource
+from root.resources import RootResource
 
 
 app = Flask(__name__)
 db.init_app(app)
+
+rootApi = restful.Api(app)
+rootApi.add_resource(RootResource, '/')
 
 todoApi = restful.Api(app)
 todoApi.add_resource(TodoResource,
