@@ -2,6 +2,8 @@
 
 Yet another simple TODO app API created with [flask-restful](https://github.com/twilio/flask-restful). Working demo deployed to Heroku available at [todo-api.karlranna.com](http://todo-api.karlranna.com)
 
+Frontend repository available at [ember-todos](https://github.com/erkarl/ember-todos).
+
 ## Install
 
 Clone this repo, set up and activate a virtualenv and install the required python dependencies
