@@ -1,6 +1,6 @@
 # Flask-Restful-TODO [![Build Status](https://travis-ci.org/erkarl/flask-restful-todo.png?branch=master)](https://travis-ci.org/erkarl/flask-restful-todo)
 
-Yet another simple TODO app API created by [flask-restful](https://github.com/twilio/flask-restful). Working demo deployed to Heroku available at [todo-api.karlranna.com](http://todo-api.karlranna.com)
+Yet another simple TODO app API created with [flask-restful](https://github.com/twilio/flask-restful). Working demo deployed to Heroku available at [todo-api.karlranna.com](http://todo-api.karlranna.com)
 
 ## Install
 
