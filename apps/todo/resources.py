@@ -6,10 +6,6 @@ from .models import Todo
 
 class TodoResource(restful.Resource):
 
-    def __init__(self):
-        # TODO: Should add reqparse here
-        super(TodoResource, self).__init__()
-
     def get_resource_fields(self):
         return {
             'id': fields.Integer,
@@ -41,12 +37,19 @@ class TodoResource(restful.Resource):
         }
 
     def post(self):
-        todo_data = request.json['todo']
-        # TODO: Should definitely validate this (todo_data) input
 
-        todo = Todo(todo_data['task'], todo_data['is_done'])
-        g.db.session.add(todo)
-        g.db.session.commit()
+        todo_json = request.get_json()
+
+        try:
+            # TODO: Should handle "data-validation" better
+            # ...couldn't get it to work with reqparse.
+            todo_data = todo_json["todo"]
+            todo = Todo(todo_data['task'], todo_data['is_done'])
+            g.db.session.add(todo)
+            g.db.session.commit()
+        except:
+            abort(400)
+
         return {
             'todo': marshal(todo, self.get_resource_fields())
         }, 201
@@ -60,12 +63,16 @@ class TodoResource(restful.Resource):
         if not todo:
             abort(404)
 
-        todo_data = request.json['todo']
-        # TODO: Again, sanitize this data, you fool!
-
-        todo.is_done = todo_data['is_done']
-        todo.task = todo_data['task']
-        g.db.session.commit()
+        todo_json = request.get_json()
+        try:
+            # TODO: Again... better error handling required.
+            # This will do as a temp. fix for now.
+            todo_data = todo_json["todo"]
+            todo.is_done = todo_data['is_done']
+            todo.task = todo_data['task']
+            g.db.session.commit()
+        except:
+            abort(400)
 
         return {
             'todo': marshal(todo, self.get_resource_fields())
