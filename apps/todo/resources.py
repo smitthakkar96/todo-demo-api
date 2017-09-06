@@ -13,41 +13,38 @@ class TodoResource(restful.Resource):
             'is_done': fields.Boolean,
         }
 
-    def get_one(self, todo_id):
-        todo = Todo.query.get(todo_id)
 
-        if not todo:
-            abort(404)
-
-        return todo
-
-    def get_all(self):
-        todos = Todo.query.all()
+    def get_all(self, api_key):
+        todos = Todo.query.filter_by(api_key=api_key)
         # TODO: Should probably add pagination...
         for todo in todos:
             yield marshal(todo, self.get_resource_fields())
 
-    def get(self, todo_id=None):
-        if todo_id:
-            todo = self.get_one(todo_id)
-            return marshal(todo, self.get_resource_fields())
-        todo_list = list(self.get_all())
+    def get(self):
+        if "api_key" not in request.headers:
+            return {
+                "error": "api_key is missing"
+            }, 400
+        todo_list = list(self.get_all(request.headers.get('api_key')))
         return {
             'todos': todo_list
         }
 
     def post(self):
 
-        todo_json = request.get_json()
-
+        todo_json = request.json
         try:
             # TODO: Should handle "data-validation" better
             # ...couldn't get it to work with reqparse.
-            todo_data = todo_json["todo"]
-            todo = Todo(todo_data['task'], todo_data['is_done'])
+            if 'api_key' not in request.headers:
+                return {
+                    "error": "api_key is missing"
+                }, 400
+            todo = Todo(todo_json['task'], todo_json['is_done'], request.headers.get('api_key'))
             g.db.session.add(todo)
             g.db.session.commit()
-        except:
+        except Exception as e:
+            print(e)
             abort(400)
 
         return {
